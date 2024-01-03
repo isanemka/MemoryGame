@@ -2,6 +2,8 @@ const cards = document.querySelectorAll('.card');
 let flippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
+const restart = document.getElementById('restart');
+
 
 function gameStart() {
     cards.forEach(card => {
@@ -65,6 +67,11 @@ function resetBoard() {
     }
 }
 
+function restartGame() {
+    gameStart();
+}
+
 cards.forEach(card => card.addEventListener('click', flipCard))
+restart.addEventListener('click', restartGame);
 
 gameStart();
