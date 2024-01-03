@@ -66,6 +66,10 @@ function resetBoard() {
         }, 500);
     }
 }
+function changeTime() {
+    var selectedTime = document.getElementById("timeSelect"). value; document.querySelector(".time span b").innerText = selectedTime;
+}
+
 
 function restartGame() {
     gameStart();
