@@ -2,8 +2,8 @@ const cards = document.querySelectorAll('.card');
 let flippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
+let count = 0;
 const restart = document.getElementById('restart');
-
 
 function gameStart() {
     cards.forEach(card => {
@@ -13,6 +13,7 @@ function gameStart() {
         card.addEventListener('click', flipCard);
     })
     lockBoard = false;
+    count = 0;
 }
 
 function flipCard() {
@@ -29,6 +30,12 @@ function flipCard() {
 
     secondCard = this;
     checkForMatch();
+    count++;
+    counter();
+}
+
+function counter() {
+    document.querySelector('.flips span b').innerText = count;
 }
 
 function checkForMatch() {
@@ -61,7 +68,7 @@ function resetBoard() {
 
     if (document.querySelectorAll('.card:not(.flip)').length === 0) {
         setTimeout(() => {
-            alert('Grattis! Du har klarat spelet!');
+            alert('Grattis! Du har klarat spelet! Det krävdes ' + count + ' drag.');
             gameStart();
         }, 500);
     }
@@ -69,6 +76,8 @@ function resetBoard() {
 
 function restartGame() {
     gameStart();
+    counter();
+    count = 0;
 }
 
 cards.forEach(card => card.addEventListener('click', flipCard))
