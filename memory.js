@@ -70,10 +70,10 @@ function changeTime() {
     var selectedTime = document.getElementById("timeSelect"). value; document.querySelector(".time span b").innerText = selectedTime;
 }
 
-
 function restartGame() {
     gameStart();
 }
+NiceSelect.bind(document.getElementById('timeSelect'));
 
 cards.forEach(card => card.addEventListener('click', flipCard))
 restart.addEventListener('click', restartGame);
