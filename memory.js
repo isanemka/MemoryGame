@@ -1,11 +1,36 @@
+import { loadImages } from "./images.js";
+
 const cards = document.querySelectorAll('.card');
 let flippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
 let count = 0;
 const restart = document.getElementById('restart');
+const frontImg = document.getElementsByClassName('img-front');
+const backImg = document.getElementsByClassName('img-back');
+let imagesArray;
 
-function gameStart() {
+async function showImages() {
+
+    const frontImageUrl = imagesArray[0].url;
+
+    Array.from(frontImg).forEach(frontImg => {
+        frontImg.src = frontImageUrl;
+    });
+
+    imagesArray.forEach((image) => {
+        const correspondingImg = Array.from(backImg).filter(img => img.parentElement.parentElement.dataset.img === image['data-img']);
+        
+        correspondingImg.forEach(imgElement => {
+            imgElement.src = image.url;
+        });
+    });
+}
+
+async function gameStart() {
+    imagesArray = await loadImages();
+    showImages();
+    count = 0;
     cards.forEach(card => {
         let setRandom = Math.floor(Math.random() * 12 + 1);
         card.style.order = setRandom;
@@ -13,7 +38,6 @@ function gameStart() {
         card.addEventListener('click', flipCard);
     })
     lockBoard = false;
-    count = 0;
 }
 
 function flipCard() {
@@ -70,6 +94,8 @@ function resetBoard() {
         setTimeout(() => {
             alert('Grattis! Du har klarat spelet! Det krävdes ' + count + ' drag.');
             gameStart();
+            count = 0;
+            counter();
         }, 500);
     }
 }
