@@ -142,12 +142,6 @@ function changeTime() {
 
 function restartGame() {
     stopTimer();
-    timeRemaining = parseInt(document.getElementById('TimeSelect').value);
-    gameStart();
-}
-
-function restartGame() {
-    stopTimer();
     timeRemaining = parseInt(document.getElementById('timeSelect').value);
     gameStart();
     counter();
