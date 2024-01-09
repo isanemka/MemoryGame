@@ -10,6 +10,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="nice-select2.css" />
   </head>
   <body>
     <header class="siteheader">
@@ -150,8 +151,13 @@
                 </div>
               </li>
               <div class="details">
+                <select id="timeSelect" onchange="changeTime()">
+                  <option value="15">15s</option>
+                  <option value="30" selected>30s</option>
+                  <option value="60">60s</option>
+                </select>
                 <p class="time">
-                  Tid: <span><b>30</b>s</span>
+                  Tid: <span><b>30</b></span>
                 </p>
                 <p class="flips">
                   Antal: <span><b>0</b></span>
@@ -164,6 +170,7 @@
       </section>
     </main>
     <footer>(C) Stefan</footer>
+    <script src="nice-select2.js"></script>
     <script type="module" src="memory.js"></script>
   </body>
 </html>
