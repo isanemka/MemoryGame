@@ -7,6 +7,7 @@ let firstCard, secondCard;
 let timerInterval;
 let timeRemaining = 30;
 let timerStarted = false;
+let count = 0;
 const restart = document.getElementById('restart');
 
 function gameStart() {
@@ -17,6 +18,7 @@ function gameStart() {
         card.addEventListener('click', flipCard);
     })
     lockBoard = false;
+    count = 0;
 }
 
 function startTimer() {
@@ -62,6 +64,12 @@ function flipCard() {
 
     secondCard = this;
     checkForMatch();
+    count++;
+    counter();
+}
+
+function counter() {
+    document.querySelector('.flips span b').innerText = count;
 }
 
 function checkForMatch() {
@@ -94,8 +102,9 @@ function resetBoard() {
 
     if (document.querySelectorAll('.card:not(.flip)').length === 0) {
         setTimeout(() => {
-            alert('Grattis! Du har klarat spelet!');
-            restartGame();
+
+            alert('Grattis! Du har klarat spelet! Det krävdes ' + count + ' drag.');
+            restartStart();
         }, 500);
     }
 }
@@ -116,6 +125,8 @@ function restartGame() {
     stopTimer();
     timeRemaining = parseInt(document.getElementById('timeSelect').value);
     gameStart();
+    counter();
+    count = 0;
 }
 
 document.getElementById('timeSelect').addEventListener('change', changeTime);
