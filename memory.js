@@ -1,7 +1,12 @@
+NiceSelect.bind(document.getElementById('timeSelect'));
+
 const cards = document.querySelectorAll('.card');
 let flippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
+let timerInterval;
+let timeRemaining = 30;
+let timerStarted = false;
 let count = 0;
 const restart = document.getElementById('restart');
 
@@ -16,7 +21,36 @@ function gameStart() {
     count = 0;
 }
 
+function startTimer() {
+    if (!timerStarted) {
+        const timerDisplay = document.querySelector('.time span b');
+
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            timerDisplay.innerText = timeRemaining;
+
+            if (timeRemaining === 0) {
+                clearInterval(timerInterval);
+                alert('Tiden är ute! Game over');
+                restartGame();
+            }
+
+        }, 1000);
+
+        timerStarted = true;
+    }
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerStarted = false;
+
+}
+
 function flipCard() {
+    if (!timerStarted) {
+        startTimer();
+    }
     if (lockBoard) return;
     if (this === firstCard) return;
 
@@ -68,19 +102,34 @@ function resetBoard() {
 
     if (document.querySelectorAll('.card:not(.flip)').length === 0) {
         setTimeout(() => {
+
             alert('Grattis! Du har klarat spelet! Det krävdes ' + count + ' drag.');
-            gameStart();
+            restartStart();
         }, 500);
     }
 }
+function changeTime() {
+    stopTimer();
+    timeRemaining = parseInt(document.getElementById("timeSelect").value);
+    document.querySelector(".time span b").innerText = timeRemaining;
+    gameStart();
+}
 
 function restartGame() {
+    stopTimer();
+    timeRemaining = parseInt(document.getElementById('TimeSelect').value);
+    gameStart();
+}
+
+function restartGame() {
+    stopTimer();
+    timeRemaining = parseInt(document.getElementById('timeSelect').value);
     gameStart();
     counter();
     count = 0;
 }
 
-cards.forEach(card => card.addEventListener('click', flipCard))
+document.getElementById('timeSelect').addEventListener('change', changeTime);
 restart.addEventListener('click', restartGame);
 
 gameStart();
