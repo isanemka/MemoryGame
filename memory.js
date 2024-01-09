@@ -2,6 +2,8 @@ const cards = document.querySelectorAll('.card');
 let flippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
+let timerInterval;
+Let timeRemaining = 30;
 const restart = document.getElementById('restart');
 
 
@@ -12,7 +14,30 @@ function gameStart() {
         card.classList.remove('flip');
         card.addEventListener('click', flipCard);
     })
+    startTimer();
     lockBoard = false;
+}
+
+function startTimer(){
+    const timerDisplay = document.querySelector('.time span b');
+
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            timerDisplay.innerText = timeRemaining;
+
+            if (timeRemaining === 0) {
+                clearInterval(timerInterval);
+                alert('Tiden är ut! Game over');
+                resetGame();
+            }
+
+        } 1000);
+
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+
 }
 
 function flipCard() {
@@ -71,8 +96,17 @@ function changeTime() {
 }
 
 function restartGame() {
+    stopTimer();
+    timeRemaining = parseInt(document.getElementById('TimeSelect').
     gameStart();
 }
+
+document.getElementById('timeSelect').addEventListener('change', function() {
+    stopTimer(); 
+    timeRemaining = parseInt(this.value); 
+    document.querySelector(".time span b").innerText = timeRemaining; 
+});
+
 NiceSelect.bind(document.getElementById('timeSelect'));
 
 cards.forEach(card => card.addEventListener('click', flipCard))
