@@ -104,7 +104,7 @@ function resetBoard() {
         setTimeout(() => {
 
             alert('Grattis! Du har klarat spelet! Det krävdes ' + count + ' drag.');
-            restartStart();
+            restartGame();
         }, 500);
     }
 }
